@@ -1,0 +1,68 @@
+<html>
+    <head>
+        <title>Piano</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        
+        <div class="keys">
+            <div class="key" data-key="65">
+                <div class="black-key"></div>
+                <kbd>A</kbd>
+            </div>
+            <div class="key" data-key="83">
+                <div class="black-key"></div>
+                <kbd>S</kbd>
+            </div>
+            <div class="key" data-key="68">
+                <div class="black-key"></div>
+                <kbd>D</kbd>
+            </div>
+            <div class="key" data-key="70">
+                <div class="black-key"></div>
+                <kbd>F</kbd>
+            </div>
+            <div class="key" data-key="71">
+                <div class="black-key"></div>
+                <kbd>G</kbd>
+            </div>
+            <div class="key" data-key="72">
+                <div class="black-key"></div>
+                <kbd>H</kbd>
+            </div>
+            <div class="key" data-key="74">
+                <kbd>J</kbd>
+            </div>
+        </div>
+
+        <audio data-key="65" src="assets/notes_C4.mp3"></audio>
+        <audio data-key="83" src="assets/notes_D4.mp3"></audio>
+        <audio data-key="68" src="assets/notes_E4.mp3"></audio>
+        <audio data-key="70" src="assets/notes_F4.mp3"></audio>
+        <audio data-key="71" src="assets/notes_G4.mp3"></audio>
+        <audio data-key="72" src="assets/notes_A4.mp3"></audio>
+        <audio data-key="74" src="assets/notes_B4.mp3"></audio>
+
+        <script>
+            window.addEventListener('keydown',function(e){
+                const key = document.querySelector(`.key[data-key="${e.keyCode}"]`)
+                const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`)
+                if(!audio) return;
+                audio.play();
+                audio.currentTime=0;
+                key.classList.add('active');
+
+            });
+
+            function removeTransition(e){
+                if(e.propertyName!='box-shadow') return; // skips if its not box-shadow
+                this.classList.remove('active');
+                
+            }
+
+            const keys = document.querySelectorAll('.key');
+            keys.forEach(key => key.addEventListener('transitionend',removeTransition));
+        </script>
+
+    </body>
+</html>
